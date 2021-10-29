@@ -37,7 +37,10 @@ class zhMain(QMainWindow, Ui_MainWindow):
     def on_start(self):
         self.thread_1.start()
         time.sleep(0.01)
-        self.thread_2.start()
+        if client.STATE:
+            self.thread_2.start()
+        else:
+            self.infoEdit.setText(client.client_init())
 
     def time_update(self, text):
         self.infoEdit.setText(text)

@@ -18,13 +18,13 @@ from keygen import verify_signature
 CURRENT_MACHINE_ID = subprocess.check_output('wmic csproduct get uuid').decode().split('\n')[1].strip().replace('-', '')
 PUBLIC_KEY = ()
 
-STATE = True
+STATE = False
 dd, hh, mm = 0, 0, 0
 
 
 def register_check():
-    if os.path.exists(r"./log/reg.zh"):
-        with open(r'./log/reg.zh', 'r') as f:
+    if os.path.exists(r"../log/reg.zh"):
+        with open(r'../log/reg.zh', 'r') as f:
             base64_time = f.read()
         decode_time = base64.b64decode(base64_time).decode("utf-8")
         try:
@@ -33,6 +33,8 @@ def register_check():
         except OSError:
             return "found no register info in regedit, need register"
         if decode_time == value:
+            global STATE
+            STATE = True
             return "register_check success"
         else:
             return "register info are not compatible, need register"
@@ -59,7 +61,7 @@ def register(activate_code_base62):
 def client_init():
     global STATE
     if register_check() == "register_check success":
-        with open(r'./log/reg.zh', 'r') as f:
+        with open(r'../log/reg.zh', 'r') as f:
             base64_time = f.read()
             seconds = int(base64.b64decode(base64_time).decode("utf-8"))
         while STATE:
@@ -70,7 +72,9 @@ def client_init():
             if seconds > 0:
                 write_time(seconds)
             else:
+                STATE = False
                 return "time is over"
+        STATE = False
         return "client_close is called"
     else:
         return register_check()
@@ -78,7 +82,7 @@ def client_init():
 
 def write_time(seconds):
     base64_time = base64.b64encode(str(seconds).encode()).decode("utf-8")
-    with open(r'./log/reg.zh', 'w') as f:
+    with open(r'../log/reg.zh', 'w') as f:
         f.write(base64_time)
 
     key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, r'Software\RegisInfo', 0, access=winreg.KEY_WRITE)
