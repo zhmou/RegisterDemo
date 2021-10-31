@@ -58,8 +58,8 @@ def verify_signature(code, public_key):
 
 if __name__ == "__main__":
     # 请自行找出两个大质数(1024位)p、q
-    p = 3
-    q = 5
+    p = 56713727820156410577229101238628035243
+    q = 4776913109852041418248056622882488319
     print(len(str(p)))
     pubkey, selfkey = gen_key(p, q)
     # 将pubkey的值粘贴于client.py的全局变量PUBLIC_KEY下

@@ -6,7 +6,7 @@
 from keygen import signature
 import baseconvert
 # 通过keygen.py生成的私钥,不能公开
-PRIVATE_KEY = ()
+PRIVATE_KEY = (270916549932685597202772283447247505705092774070722510140833201833867826517, 122823329288797999055324016750608326406193548375374156516392553496600091329)
 
 
 def create_activate_code(CURRENT_MACHINE_ID, time):
@@ -26,6 +26,7 @@ def create_activate_code(CURRENT_MACHINE_ID, time):
 # 测试
 if __name__ == "__main__":
     CURRENT_MACHINE_ID = "运行test.py, 点击Generate UUID按钮以获取你自己的CURRENT_MACHINE_ID"
+    CURRENT_MACHINE_ID = "EB629300E3E047CC92358C8CAAA8BAC7"
     time = 1
     code = create_activate_code(CURRENT_MACHINE_ID, time)
     print(code)

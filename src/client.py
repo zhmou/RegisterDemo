@@ -16,7 +16,7 @@ from keygen import verify_signature
 
 # CURRENT_MACHINE_ID 获取机器的UUID, Windows平台下使用
 CURRENT_MACHINE_ID = subprocess.check_output('wmic csproduct get uuid').decode().split('\n')[1].strip().replace('-', '')
-PUBLIC_KEY = ()
+PUBLIC_KEY = (270916549932685597202772283447247505705092774070722510140833201833867826517, 65537)
 
 STATE = False
 dd, hh, mm = 0, 0, 0
@@ -43,6 +43,8 @@ def register_check():
 
 
 def register(activate_code_base62):
+    if register_check() == "register_check success":
+        return "you have been registered, do not register again"
     activate_code = int(baseconvert.f(activate_code_base62, 62, 10))
     info = verify_signature(activate_code, PUBLIC_KEY)
     machine_id_base10 = int(CURRENT_MACHINE_ID, base=16)
@@ -81,6 +83,8 @@ def client_init():
 
 
 def write_time(seconds):
+    if not os.path.isdir(r'../log'):
+        os.mkdir(r'../log')
     base64_time = base64.b64encode(str(seconds).encode()).decode("utf-8")
     with open(r'../log/reg.zh', 'w') as f:
         f.write(base64_time)
@@ -101,3 +105,7 @@ def time_left(seconds):
 def client_close():
     global STATE
     STATE = False
+
+
+if __name__ == "__main__":
+    print(register("5w8fZl7lBa0TdiBB4aHIrpoeMJfeF2pZZHl7T0N95k"))
