@@ -1,5 +1,6 @@
 # RegisterDemo
 一个实现了机器码生成与激活码激活（模拟软件注册）功能的demo
+**仅作为demo或了解原理使用，目前还存在一些bug，请勿应用于实际的生产环境之中**
 
 ## 目录结构
 ![image](https://user-images.githubusercontent.com/43105172/139270375-fa860e8b-eff8-42ef-a0c6-866cdebd329a.png)
